@@ -3,30 +3,18 @@
 #include <cassert>
 #include <cstdio>
 
-Thread* gThread1 = nullptr;
-
-void thread1_1() {
-    puts("thread1_1");
-}
-
-void thread1() {
-    puts("start thread1");
-    thread1_1();
-    puts("finish thread1");
-
-    assert(gThread1 != nullptr);
-    yield_from(*gThread1);
-}
+struct Thread1 : public Thread {
+    virtual void threadFn() override {
+        puts("start threadFn -> yield()");
+        yield();
+        puts("return from yield() -> finish threadFn");
+    }
+} gThread1;
 
 int main() {
     puts("start main thread");
 
-    Thread t(thread1);
-    gThread1 = &t;
-
-    yield_to(t);
-
-    gThread1 = nullptr;
+    gThread1.yield_to();
 
     puts("finish main thread");
     return 0;

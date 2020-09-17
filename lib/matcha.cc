@@ -14,7 +14,7 @@ long get_pagesize() {
     return sysconf(_SC_PAGESIZE);
 }
 
-Thread::Thread(void (*fn)()) : mUserFn(fn) {
+Thread::Thread() {
     const long PAGE_SIZE = get_pagesize();
     const long STACK_SIZE = 8 * PAGE_SIZE;
 
@@ -53,16 +53,16 @@ void Thread::entry(void* obj) {
     Thread* t = static_cast<Thread*>(obj);
 
     puts("thread entry");
-    t->mUserFn();
+    t->threadFn();
     puts("thread done");
 }
 
 void* gOriginalStack;
 
-void yield_to(const Thread& t) {
-    yield(t.mStackPtr, &gOriginalStack);
+void Thread::yield() {
+    ::yield(gOriginalStack, &mStackPtr);
 }
 
-void yield_from(Thread& t) {
-    yield(gOriginalStack, &t.mStackPtr);
+void Thread::yield_to() const {
+    ::yield(mStackPtr, &gOriginalStack);
 }
