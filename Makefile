@@ -1,11 +1,24 @@
-CXX := g++
+AS       := gcc
+CXX      := g++
 CXXFLAGS := -g -O0 -Wall -Wextra -I.
+AR       := ar
+RANLIB   := ranlib
 
-example/test: example/test.cc lib/thread_create.s lib/matcha.h
-	$(CXX) -o $@ $^ $(CXXFLAGS)
+lib/libmatcha.a: lib/matcha.o lib/thread_create.o lib/matcha.h
+	$(AR) rcs $@ $(filter %.o,$^)
+	$(RANLIB) $@
+
+%.o: %.cc
+	$(CXX) -c -o $@ $^ $(CXXFLAGS)
+
+%.o: %.s
+	$(AS) -c -o $@ $^
 
 fmt:
 	fd --type f '.+.h$$|.+.cc$$' --exec clang-format -i {}
+
+example/test: example/test.o lib/libmatcha.a
+	$(CXX) -o $@ $^
 
 gdb: example/test
 	which cgdb && cgdb -x util.gdb -ex 'start' example/test \
@@ -13,3 +26,4 @@ gdb: example/test
 
 clean:
 	rm -f example/test
+	rm -f **/*.o **/lib*.a
