@@ -1,9 +1,9 @@
-# match-threads
+# matcha-threads
 
 A simple and unsafe implementation of cooperative-multitasking in userspace
 (see [fibers][fiber_wiki]).
 
-`match-threads` were born after being bored and feeling low-"levelish".
+`matcha-threads` were born after being bored and feeling low-"levelish".
 
 ## License
 This project is licensed under the [MIT](LICENSE) license.
