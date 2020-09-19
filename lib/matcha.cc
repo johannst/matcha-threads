@@ -2,13 +2,12 @@
 
 #include <cassert>
 #include <cstdint>
-#include <cstdio>
 #include <sys/mman.h>
 #include <unistd.h>  // sysconf
 
 // asm fns
 extern "C" void thread_create();
-extern "C" void yield(void* new_stack, void** old_stack);
+extern "C" void yield(const void* new_stack, void* const* old_stack);
 
 long get_pagesize() {
     return sysconf(_SC_PAGESIZE);
@@ -51,18 +50,14 @@ Thread::Thread() {
 
 void Thread::entry(void* obj) {
     Thread* t = static_cast<Thread*>(obj);
-
-    puts("thread entry");
     t->threadFn();
-    puts("thread done");
 }
-
-void* gOriginalStack;
 
 void Thread::yield() {
-    ::yield(gOriginalStack, &mStackPtr);
+    assert(mExecutor);
+    ::yield(mExecutor->getStackPtr(), &mStackPtr);
 }
 
-void Thread::yield_to() const {
-    ::yield(mStackPtr, &gOriginalStack);
+void Executor::yield_to(const Thread* t) const {
+    ::yield(t->mStackPtr, &mStackPtr);
 }

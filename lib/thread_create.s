@@ -23,9 +23,9 @@ thread_create:
     .size thread_create, .-thread_create
 
 
-    # extern "C" void yield(void* new_stack, void** old_stack);
-    #                             ^^^^^^^^^         ^^^^^^^^^
-    #                             rdi               rsi
+    # extern "C" void yield(const void* new_stack, void* const* old_stack);
+    #                                   ^^^^^^^^^               ^^^^^^^^^
+    #                                   rdi                     rsi
     .global yield
     .type   yield, @function
 yield:

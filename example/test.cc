@@ -1,21 +1,30 @@
 #include "lib/matcha.h"
 
-#include <cassert>
 #include <cstdio>
+#include <memory>
 
-struct Thread1 : public Thread {
+struct TestThread : public Thread {
+    TestThread(const char* name) : Thread(), mName(name) {}
+
     virtual void threadFn() override {
-        puts("start threadFn -> yield()");
+        printf("[%s] starting up TestThread -> yield()\n", mName);
         yield();
-        puts("return from yield() -> finish threadFn");
+        printf("[%s] yield() -> finishing TestThreads\n", mName);
     }
-} gThread1;
+
+  private:
+    const char* mName;
+};
 
 int main() {
-    puts("start main thread");
+    puts("[main] start main thread");
 
-    gThread1.yield_to();
+    Executor e;
+    e.spawn(std::make_unique<TestThread>("Thread1"));
+    e.spawn(std::make_unique<TestThread>("Thread2"));
+    e.spawn(std::make_unique<TestThread>("Thread3"));
+    e.run();
 
-    puts("finish main thread");
+    puts("[main] finish main thread");
     return 0;
 }
