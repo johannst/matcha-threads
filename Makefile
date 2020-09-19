@@ -2,11 +2,9 @@ AS       := gcc
 CXX      := g++
 CXXFLAGS := -g -O0 -Wall -Wextra -I.
 AR       := ar
-RANLIB   := ranlib
 
 lib/libmatcha.a: lib/matcha.o lib/thread_create.o lib/matcha.h
 	$(AR) rcs $@ $(filter %.o,$^)
-	$(RANLIB) $@
 
 %.o: %.cc
 	$(CXX) -c -o $@ $^ $(CXXFLAGS)
