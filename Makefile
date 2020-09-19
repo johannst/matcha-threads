@@ -1,4 +1,5 @@
 AS       := gcc
+ASFLAGS  := -g -O0
 CXX      := g++
 CXXFLAGS := -g -O0 -Wall -Wextra -I.
 AR       := ar
@@ -10,7 +11,7 @@ lib/libmatcha.a: lib/matcha.o lib/thread_create.o lib/matcha.h
 	$(CXX) -c -o $@ $^ $(CXXFLAGS)
 
 %.o: %.s
-	$(AS) -c -o $@ $^
+	$(AS) -c -o $@ $^ $(ASFLAGS)
 
 fmt:
 	fd --type f '.+.h$$|.+.cc$$' --exec clang-format -i {}
