@@ -3,7 +3,8 @@
 # int/ptr ret  : rax
 
     .intel_syntax noprefix
-    .section .text ,"ax",@progbits
+    .section .text, "ax", @progbits
+
 
      # extern "C" void thread_create();
     .global thread_create
@@ -20,7 +21,6 @@ thread_create:
     jmp 1b
     .cfi_endproc
     .size thread_create, .-thread_create
-
 
 
     # extern "C" void yield(void* new_stack, void** old_stack);
