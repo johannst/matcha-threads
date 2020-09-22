@@ -1,3 +1,5 @@
+/* Copyright (c) 2020 Johannes Stoelp */
+
 #include "matcha.h"
 
 #include <cassert>

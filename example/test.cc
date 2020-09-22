@@ -1,3 +1,5 @@
+/* Copyright (c) 2020 Johannes Stoelp */
+
 #include "lib/matcha.h"
 
 #include <cstdio>

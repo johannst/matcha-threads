@@ -1,3 +1,5 @@
+# Copyright (c) 2020 Johannes Stoelp
+
 # SysV AMD64 ABI
 # int/ptr args : rdi, rsi, rdx, rcx, r8, r9
 # int/ptr ret  : rax

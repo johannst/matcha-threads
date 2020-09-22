@@ -1,3 +1,5 @@
+# Copyright (c) 2020 Johannes Stoelp
+
 AS       := gcc
 ASFLAGS  := -g -O0
 CXX      := g++
