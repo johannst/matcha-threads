@@ -1,11 +1,12 @@
 /* Copyright (c) 2020 Johannes Stoelp */
 
-#include "lib/matcha.h"
+#include "lib/executor.h"
+#include "lib/thread.h"
 
 #include <cstdio>
 #include <memory>
 
-struct TestThread : public Thread {
+struct TestThread : public nMatcha::Thread {
     TestThread(const char* name) : Thread(), mName(name) {}
 
     virtual void threadFn() override {
@@ -21,7 +22,7 @@ struct TestThread : public Thread {
 int main() {
     puts("[main] start main thread");
 
-    Executor e;
+    nMatcha::Executor e;
     e.spawn(std::make_unique<TestThread>("Thread1"));
     e.spawn(std::make_unique<TestThread>("Thread2"));
     e.spawn(std::make_unique<TestThread>("Thread3"));

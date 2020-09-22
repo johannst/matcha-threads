@@ -1,6 +1,6 @@
 *.o
 *.a
-test
+demo1
 
 .clangd
 compile_commands.json

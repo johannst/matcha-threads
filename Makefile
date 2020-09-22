@@ -6,7 +6,8 @@ CXX      := g++
 CXXFLAGS := -g -O0 -Wall -Wextra -I.
 AR       := ar
 
-lib/libmatcha.a: lib/matcha.o lib/thread_create.o lib/matcha.h
+lib/libmatcha.a: lib/compile_guard.o lib/thread.o lib/executor.o lib/arch/x86_64/thread_create.o lib/arch/x86_64/yield.o \
+                 lib/thread.h lib/executor.h lib/arch/x86_64/asm.h
 	$(AR) rcs $@ $(filter %.o,$^)
 
 %.o: %.cc
@@ -18,13 +19,13 @@ lib/libmatcha.a: lib/matcha.o lib/thread_create.o lib/matcha.h
 fmt:
 	fd --type f '.+.h$$|.+.cc$$' --exec clang-format -i {}
 
-example/test: example/test.o lib/libmatcha.a
+example/demo1: example/demo1.o lib/libmatcha.a
 	$(CXX) -o $@ $^
 
-gdb: example/test
-	which cgdb && cgdb -x util.gdb -ex 'start' example/test \
-	           ||  gdb -x util.gdb -ex 'start' example/test
+gdb: example/demo1
+	which cgdb && cgdb -x util.gdb -ex 'start' example/demo1 \
+	           ||  gdb -x util.gdb -ex 'start' example/demo1
 
 clean:
-	rm -f example/test
+	rm -f example/demo1
 	rm -f **/*.o **/lib*.a

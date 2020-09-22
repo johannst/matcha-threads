@@ -1,29 +1,7 @@
 # Copyright (c) 2020 Johannes Stoelp
 
-# SysV AMD64 ABI
-# int/ptr args : rdi, rsi, rdx, rcx, r8, r9
-# int/ptr ret  : rax
-
     .intel_syntax noprefix
     .section .text, "ax", @progbits
-
-
-     # extern "C" void thread_create();
-    .global thread_create
-    .type   thread_create, @function
-thread_create:
-    .cfi_startproc
-    mov rdi, qword ptr [rsp+0x8]
-    mov rsi, qword ptr [rsp]
-
-    call rsi
-
-    # FIXME: no return from thread after user fn finished.
-1:
-    jmp 1b
-    .cfi_endproc
-    .size thread_create, .-thread_create
-
 
     # extern "C" void yield(const void* new_stack, void* const* old_stack);
     #                                   ^^^^^^^^^               ^^^^^^^^^
@@ -64,4 +42,3 @@ yield:
     ret
     .cfi_endproc
     .size yield, .-yield
-
