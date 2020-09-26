@@ -12,6 +12,9 @@ namespace nMatcha {
 
     void Executor::run() {
         for (const std::unique_ptr<Thread>& t : mThreads) {
+            if (t->isFinished()) {
+                continue;
+            }
             yield_to(t.get());
         }
     }

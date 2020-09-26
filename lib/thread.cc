@@ -6,7 +6,9 @@
 #include "executor.h"
 
 #include <cassert>
-#include <cstdint>     // uintN_t
+#include <cstdint>  // uintN_t
+#include <exception>
+#include <iostream>
 #include <sys/mman.h>  // mmap
 #include <unistd.h>    // sysconf
 
@@ -15,7 +17,7 @@ namespace {
 }  // namespace
 
 namespace nMatcha {
-    Thread::Thread() : mStackPtr(nullptr), mExecutor(nullptr) {
+    Thread::Thread() : mStackPtr(nullptr), mFinished(false), mExecutor(nullptr) {
         const long PAGE_SIZE = get_pagesize();
         const long STACK_SIZE = 8 * PAGE_SIZE;
 
@@ -64,7 +66,15 @@ namespace nMatcha {
 
     void Thread::entry(void* obj) {
         Thread* t = static_cast<Thread*>(obj);
-        t->threadFn();
+        try {
+            t->threadFn();
+        } catch (const std::exception& e) {
+            std::cerr << "Thread: caught unhandled std::exception!\n" << e.what() << std::endl;
+        } catch (...) {
+            std::cerr << "Thread: caught unhandled unknown exception!" << std::endl;
+        }
+        t->mFinished = true;
+        t->yield();
     }
 
     void Thread::yield() {

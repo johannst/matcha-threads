@@ -13,12 +13,15 @@ namespace nMatcha {
 
         virtual void threadFn() = 0;
 
+        bool isFinished() const { return mFinished; }
+
       protected:
         void yield();
 
       private:
         static void entry(void* obj);
         void* mStackPtr;
+        bool mFinished;
 
         friend struct Executor;
         const Executor* mExecutor;
