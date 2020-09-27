@@ -6,16 +6,19 @@
 
 namespace nMatcha {
     void Executor::spawn(std::unique_ptr<Thread> t) {
-        mThreads.push_back(std::move(t));
-        mThreads.back()->mExecutor = this;
+        mThreads.push_front(std::move(t));
+        mThreads.front()->mExecutor = this;
     }
 
     void Executor::run() {
-        for (const std::unique_ptr<Thread>& t : mThreads) {
-            if (t->isFinished()) {
-                continue;
+        while (!mThreads.empty()) {
+            for (const std::unique_ptr<Thread>& t : mThreads) {
+                if (!t->isFinished()) {
+                    yield_to(t.get());
+                }
             }
-            yield_to(t.get());
+
+            mThreads.remove_if([](const std::unique_ptr<Thread>& t) { return t->isFinished(); });
         }
     }
 

@@ -4,8 +4,8 @@
 
 #include "thread.h"
 
+#include <forward_list>
 #include <memory>
-#include <vector>
 
 namespace nMatcha {
     struct Executor {
@@ -20,7 +20,7 @@ namespace nMatcha {
 
       private:
         void* mStackPtr;
-        std::vector<std::unique_ptr<Thread>> mThreads;
+        std::forward_list<std::unique_ptr<Thread>> mThreads;
 
         void yield_to(const Thread* t) const;
     };

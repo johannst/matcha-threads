@@ -27,7 +27,6 @@ int main() {
     e.spawn(std::make_unique<TestThread>("Thread2"));
     e.spawn(std::make_unique<TestThread>("Thread3"));
     e.run();
-    e.run();
 
     puts("[main] finish main thread");
     return 0;
