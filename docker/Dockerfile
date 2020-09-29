@@ -4,7 +4,6 @@ FROM ubuntu:20.04
 RUN apt update                     \
  && DEBIAN_FRONTEND=noninteractive \
     apt install -y                 \
-      git                          \
       make                         \
       gcc                          \
       g++                          \
@@ -12,8 +11,9 @@ RUN apt update                     \
       g++-aarch64-linux-gnu        \
       gdb-multiarch                \
       qemu-user                    \
-      neovim                       \
  && rm -rf /var/lib/apt/lists/*    \
- && apt-get clean
+ && apt-get clean                  \
+ # Remove expensive qemu emulators which are currently not used.
+ && rm -f $(find /usr/bin -name 'qemu-*' | grep -v 'qemu-aarch64$')
 
 WORKDIR /develop
