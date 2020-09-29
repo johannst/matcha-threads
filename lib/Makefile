@@ -22,4 +22,5 @@ libmatcha.a: thread.o executor.o                               \
 	$(AS) -c -o $@ $^ $(ASFLAGS)
 
 clean:
-	rm -f *.o **/*.o libmatcha.a
+	find . -name '*.o' -exec rm -f {} \;
+	rm -f libmatcha.a
