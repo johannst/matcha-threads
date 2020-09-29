@@ -2,7 +2,7 @@
 
 #include "executor.h"
 
-#include "arch/x86_64/asm.h"
+#include "arch/x86_64/api.h"
 
 namespace nMatcha {
     void Executor::spawn(std::unique_ptr<Thread> t) {
@@ -11,13 +11,13 @@ namespace nMatcha {
     }
 
     void Executor::run() {
+        // Round robin until all threads finished.
         while (!mThreads.empty()) {
             for (const std::unique_ptr<Thread>& t : mThreads) {
                 if (!t->isFinished()) {
                     yield_to(t.get());
                 }
             }
-
             mThreads.remove_if([](const std::unique_ptr<Thread>& t) { return t->isFinished(); });
         }
     }

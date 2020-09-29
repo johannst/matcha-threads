@@ -2,11 +2,10 @@
 
 #include "thread.h"
 
-#include "arch/x86_64/asm.h"
+#include "arch/x86_64/api.h"
 #include "executor.h"
 
 #include <cassert>
-#include <cstdint>  // uintN_t
 #include <exception>
 #include <iostream>
 #include <sys/mman.h>  // mmap
@@ -35,33 +34,9 @@ namespace nMatcha {
 
         // Adjust stack pointer, as stack grows downwards.
         mStackPtr = static_cast<uint8_t*>(stack) + STACK_SIZE;
-        {
-            static_assert(sizeof(uint64_t) == sizeof(std::uintptr_t), "Pointer must be 64bit!");
 
-            // Setup initial stack frame which will be popped when yielding
-            // first time into the thread.
-            // Basic idea is to yield into Thread::entry() function which will
-            // then call the user function.
-
-            uint64_t* stack = static_cast<uint64_t*>(mStackPtr);
-            // Arguments for `thread_create`.
-            *(--stack) = reinterpret_cast<uint64_t>(this);
-            *(--stack) = reinterpret_cast<uint64_t>(Thread::entry);
-
-            // Yield epilogue.
-            *(--stack) = reinterpret_cast<uint64_t>(thread_create);  // Return address
-            *(--stack) = static_cast<uint64_t>(0);                   // rbp
-
-            // Callee saved registers.
-            *(--stack) = static_cast<uint64_t>(0);                                           // rbx
-            *(--stack) = reinterpret_cast<uint64_t>(static_cast<uint64_t*>(mStackPtr) - 4);  // rbp
-            *(--stack) = static_cast<uint64_t>(0);                                           // r12
-            *(--stack) = static_cast<uint64_t>(0);                                           // r13
-            *(--stack) = static_cast<uint64_t>(0);                                           // r14
-            *(--stack) = static_cast<uint64_t>(0);                                           // r15
-
-            mStackPtr = static_cast<void*>(stack);
-        }
+        // Arch specific stack initialization.
+        mStackPtr = init_stack(mStackPtr, Thread::entry, static_cast<void*>(this));
     }
 
     void Thread::entry(void* obj) {
