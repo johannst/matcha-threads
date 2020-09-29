@@ -10,7 +10,7 @@ lib/libmatcha.a:
 	$(CXX) -c -o $@ $^ $(CXXFLAGS)
 
 fmt:
-	fd --type f '.+.h$$|.+.cc$$' --exec clang-format -i {}
+	fd --type f '.+\.h$$|.+\.cc$$' --exec clang-format -i {}
 
 example/demo1: example/demo1.o lib/libmatcha.a
 	$(CXX) -o $@ $^
