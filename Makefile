@@ -43,8 +43,9 @@ else
 endif
 
 docker: docker/Dockerfile
-	cd docker && ./build.sh
-	docker run -it --rm -v $(PWD):/develop matcha-box:latest
+	$(eval IMG := matcha-box)
+	cd docker && ./build.sh $(IMG)
+	docker run -it --rm -v $(PWD):/develop $(IMG):latest
 .PHONY: docker
 
 
