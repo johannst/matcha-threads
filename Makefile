@@ -42,6 +42,12 @@ else
 	           ||  gdb -x util.gdb -ex 'start' example/demo1
 endif
 
+docker: docker/Dockerfile
+	cd docker && ./build.sh
+	docker run -it --rm -v $(PWD):/develop matcha-box:latest
+.PHONY: docker
+
+
 clean:
 	make -C lib clean
 	rm -f example/demo1 example/demo1.o
