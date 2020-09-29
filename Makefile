@@ -20,26 +20,28 @@ fmt:
 
 example/demo1: example/demo1.o lib/libmatcha.a
 	$(CXX) -o $@ $^ $(LDFLAGS)
+
+demo1: example/demo1
 ifeq ($(ARCH),arm64)
 	qemu-aarch64                                      \
 	    -L /usr/aarch64-linux-gnu                     \
 	    -E LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib \
-	    example/demo1
+	    $<
 else
-	example/demo1
+	$<
 endif
 
-gdb: example/demo1
+demo1-gdb: example/demo1
 ifeq ($(ARCH),arm64)
 	qemu-aarch64                                      \
 	    -L /usr/aarch64-linux-gnu                     \
 	    -E LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib \
 	    -g 1234                                       \
-	    example/demo1 &
-	gdb-multiarch -ex 'target remote :1234' -ex 'b main' -ex 'c' example/demo1
+	    $< &
+	gdb-multiarch -ex 'target remote :1234' -ex 'b main' -ex 'c' $<
 else
-	which cgdb && cgdb -x util.gdb -ex 'start' example/demo1 \
-	           ||  gdb -x util.gdb -ex 'start' example/demo1
+	which cgdb && cgdb --ex 'start' $< \
+	           ||  gdb --ex 'start' $<
 endif
 
 docker: docker/Dockerfile
@@ -47,7 +49,6 @@ docker: docker/Dockerfile
 	cd docker && ./build.sh $(IMG)
 	docker run -it --rm -v $(PWD):/develop $(IMG):latest
 .PHONY: docker
-
 
 clean:
 	make -C lib clean
