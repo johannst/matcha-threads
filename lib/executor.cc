@@ -2,7 +2,7 @@
 
 #include "executor.h"
 
-#include "arch/x86_64/api.h"
+#include "arch.h"
 
 namespace nMatcha {
     void Executor::spawn(std::unique_ptr<Thread> t) {
