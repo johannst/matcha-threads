@@ -3,7 +3,9 @@
 
 image=${1:-match-box}
 
-if ! docker build -t $image . ; then
+script_dir=$(readlink -f $(dirname $0))
+
+if ! docker build -t $image $script_dir ; then
     echo "ERR: Failed to build docker image!"
     exit 1
 fi

@@ -1,0 +1,22 @@
+# Copyright (c) 2020 Johannes Stoelp
+
+on: [push, pull_request]
+
+jobs:
+  check_examples:
+    runs-on: ubuntu-latest
+    name: Check examples (all ARCHs)
+    steps:
+    - name: Checkout project
+      uses: actions/checkout@v2
+    - name: Build docker image
+      run: |
+          docker/build.sh matcha-box
+    - name: Run examples
+      run: |
+          for arch in x86_64 arm64; do
+              docker run           \
+                   --rm            \
+                  -v $PWD:/develop \
+                  matcha-box /bin/bash -c "make clean && make ARCH=$arch demo1"
+          done
