@@ -11,6 +11,7 @@ CXXFLAGS := -g -O0 -Wall -Wextra -I.
 
 lib/libmatcha.a:
 	make -C lib ARCH=$(ARCH)
+.PHONY: lib/libmatcha.a
 
 %.o: %.cc
 	$(CXX) -c -o $@ $^ $(CXXFLAGS)
