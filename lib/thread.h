@@ -16,7 +16,9 @@ namespace nMatcha {
 
         virtual void threadFn() = 0;
 
-        bool isFinished() const { return mFinished; }
+        bool isFinished() const {
+            return mFinished;
+        }
 
       protected:
         void yield();

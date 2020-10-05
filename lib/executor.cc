@@ -22,5 +22,7 @@ namespace nMatcha {
         }
     }
 
-    void Executor::yield_to(const Thread* t) const { ::yield(t->mStackPtr, &mStackPtr); }
+    void Executor::yield_to(const Thread* t) const {
+        ::yield(t->mStackPtr, &mStackPtr);
+    }
 }  // namespace nMatcha

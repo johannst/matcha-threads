@@ -13,7 +13,9 @@ namespace nMatcha {
         Executor& operator=(const Executor&) = delete;
         Executor() = default;
 
-        const void* getStackPtr() const { return mStackPtr; }
+        const void* getStackPtr() const {
+            return mStackPtr;
+        }
 
         void spawn(std::unique_ptr<Thread> t);
         void run();

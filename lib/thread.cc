@@ -12,7 +12,9 @@
 #include <unistd.h>    // sysconf
 
 namespace {
-    static long get_pagesize() { return ::sysconf(_SC_PAGESIZE); }
+    static long get_pagesize() {
+        return ::sysconf(_SC_PAGESIZE);
+    }
 }  // namespace
 
 namespace nMatcha {
@@ -57,9 +59,15 @@ namespace nMatcha {
         ::yield(mExecutor->getStackPtr(), &mStackPtr);
     }
 
-    std::unique_ptr<Thread> FnThread::make(UserFn f) { return std::make_unique<FnThread>(CreatorToken{}, f); }
+    std::unique_ptr<Thread> FnThread::make(UserFn f) {
+        return std::make_unique<FnThread>(CreatorToken{}, f);
+    }
 
-    void FnThread::threadFn() { mUserFn(*this); }
+    void FnThread::threadFn() {
+        mUserFn(*this);
+    }
 
-    void FnThread::yield() { Thread::yield(); }
+    void FnThread::yield() {
+        Thread::yield();
+    }
 }  // namespace nMatcha
