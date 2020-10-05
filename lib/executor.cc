@@ -5,6 +5,10 @@
 #include "arch.h"
 
 namespace nMatcha {
+    const void* Executor::getStackPtr() const {
+        return mStackPtr;
+    }
+
     void Executor::spawn(std::unique_ptr<Thread> t) {
         mThreads.push_front(std::move(t));
         mThreads.front()->mExecutor = this;

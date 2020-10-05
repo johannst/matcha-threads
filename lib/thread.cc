@@ -41,8 +41,12 @@ namespace nMatcha {
         mStackPtr = init_stack(mStackPtr, Thread::entry, static_cast<void*>(this));
     }
 
-    void Thread::entry(void* obj) {
-        Thread* t = static_cast<Thread*>(obj);
+    bool Thread::isFinished() const {
+        return mFinished;
+    }
+
+    void Thread::entry(void* ctx) {
+        Thread* t = static_cast<Thread*>(ctx);
         try {
             t->threadFn();
         } catch (const std::exception& e) {
