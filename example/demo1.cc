@@ -10,14 +10,20 @@ struct TestThread : public nMatcha::Thread {
     TestThread(const char* name) : Thread(), mName(name) {}
 
     virtual void threadFn() override {
-        printf("[%s] starting up TestThread -> yield()\n", mName);
+        printf("[TestThread(%s)] start -> yield\n", mName);
         yield();
-        printf("[%s] yield() -> finishing TestThreads\n", mName);
+        printf("[TestThread(%s)] yield -> done\n", mName);
     }
 
   private:
     const char* mName;
 };
+
+void freeThreadFn(nMatcha::Yielder& y) {
+    puts("[freeThreadFn] start -> yield");
+    y.yield();
+    puts("[freeThreadFn] yield -> done");
+}
 
 int main() {
     puts("[main] start main thread");
@@ -26,6 +32,15 @@ int main() {
     e.spawn(std::make_unique<TestThread>("Thread1"));
     e.spawn(std::make_unique<TestThread>("Thread2"));
     e.spawn(std::make_unique<TestThread>("Thread3"));
+
+    e.spawn(nMatcha::FnThread::make([](nMatcha::Yielder& y) {
+        puts("[Lambda Thread] start -> yield");
+        y.yield();
+        puts("[Lambda Thread] yield -> done");
+    }));
+
+    e.spawn(nMatcha::FnThread::make(freeThreadFn));
+
     e.run();
 
     puts("[main] finish main thread");

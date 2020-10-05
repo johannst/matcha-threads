@@ -56,4 +56,10 @@ namespace nMatcha {
         assert(mExecutor);
         ::yield(mExecutor->getStackPtr(), &mStackPtr);
     }
+
+    std::unique_ptr<Thread> FnThread::make(UserFn f) { return std::make_unique<FnThread>(CreatorToken{}, f); }
+
+    void FnThread::threadFn() { mUserFn(*this); }
+
+    void FnThread::yield() { Thread::yield(); }
 }  // namespace nMatcha

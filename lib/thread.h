@@ -2,6 +2,9 @@
 
 #pragma once
 
+#include <functional>
+#include <memory>
+
 namespace nMatcha {
     struct Executor;
 
@@ -25,5 +28,25 @@ namespace nMatcha {
 
         friend struct Executor;
         const Executor* mExecutor;
+    };
+
+    struct Yielder {
+        virtual void yield() = 0;
+    };
+
+    struct FnThread : public Thread, public Yielder {
+        using UserFn = std::function<void(Yielder&)>;
+        static std::unique_ptr<Thread> make(UserFn f);
+
+      private:
+        virtual void threadFn() override;
+        virtual void yield() override;
+
+        UserFn mUserFn;
+
+        enum class CreatorToken {};
+
+      public:
+        FnThread(CreatorToken, UserFn f) : mUserFn(f) {}
     };
 }  // namespace nMatcha
