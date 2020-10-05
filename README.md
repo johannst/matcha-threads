@@ -10,6 +10,45 @@ Supported platforms are `Linux` running on
 - `x86_64`
 - `arm64`
 
+### Example
+
+```cpp
+// file: demo.cc
+#include "lib/executor.h"
+#include "lib/thread.h"
+#include <cstdio>
+
+struct MyThread : public nMatcha::Thread {
+    virtual void threadFn() override {
+        puts("like");
+        yield();
+        puts("tea");
+    }
+};
+
+int main() {
+    nMatcha::Executor e;
+    e.spawn(std::make_unique<MyThread>());
+    e.spawn(nMatcha::FnThread::make([](nMatcha::Yielder& y) {
+        puts("I");
+        y.yield();
+        puts("green");
+    }));
+    e.run();
+    return 0;
+}
+```
+
+This example `demo.cc` can be run as
+```bash
+> make -C lib && g++ -o demo demo.cc -I. lib/libmatcha.a && ./demo
+...
+I
+like
+green
+tea
+```
+
 ### Setup development environment
 This project provides a [`Dockerfile`](docker/Dockerfile) with all the required
 tools pre-installed.
