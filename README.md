@@ -1,4 +1,5 @@
 # matcha-threads
+![check-examples][badge_check_examples]
 
 A simple and unsafe implementation of `cooperative-multitasking` in userspace
 (see [`fibers`][fiber_wiki]).
@@ -80,3 +81,4 @@ make ARCH=arm64 demo1
 This project is licensed under the [MIT](LICENSE) license.
 
 [fiber_wiki]: https://en.wikipedia.org/wiki/Fiber_(computer_science)
+[badge_check_examples]: https://github.com/johannst/matcha-threads/workflows/check-examples/badge.svg
