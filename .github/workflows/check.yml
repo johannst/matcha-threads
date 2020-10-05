@@ -16,8 +16,8 @@ jobs:
       run: |
           for arch in x86_64 arm64; do
               echo -e "\e[1;32m==> check ARCH=$arch\e0m"
-              docker run           \
-                   --rm            \
-                  -v $PWD:/develop \
+              docker run                 \
+                  --rm                   \
+                  --volume $PWD:/develop \
                   matcha-box /bin/bash -c "make clean && make ARCH=$arch demo1"
           done
