@@ -3,7 +3,7 @@
 
 extern "C" void thread_create();
 
-void* init_stack(void* stack_ptr, void (*entry)(void*), void* ctx) {
+void* init_stack(void* stack_ptr, void (*entry)(void*), const void* ctx) {
     static_assert(sizeof(uint64_t) == sizeof(std::uintptr_t), "Pointer must be 64bit!");
 
     // Setup initial stack frame which will be popped when yielding

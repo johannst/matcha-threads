@@ -3,9 +3,9 @@
     .arch armv8-a
     .section .text, "ax", @progbits
 
-    # extern "C" void yield(const void* new_stack, void* const* old_stack);
-    #                                   ^^^^^^^^^               ^^^^^^^^^
-    #                                   rdi                     rsi
+    # extern "C" void yield(const void* new_stack, void** old_stack);
+    #                                   ^^^^^^^^^         ^^^^^^^^^
+    #                                   x0                x1
     .global yield
     .type   yield, @function
 yield:

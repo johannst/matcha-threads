@@ -34,6 +34,6 @@ namespace nMatcha {
         void* mStackPtr;
         std::forward_list<std::unique_ptr<Thread>> mThreads;
 
-        void yield_to(const Thread* t) const;
+        void yield_to(const Thread* t);
     };
 }  // namespace nMatcha
