@@ -27,6 +27,6 @@ namespace nMatcha {
     }
 
     void Executor::yield_to(const Thread* t) {
-        ::yield(t->mStackPtr, &mStackPtr);
+        ::yield(t->mStack.mPtr, &mStackPtr);
     }
 }  // namespace nMatcha

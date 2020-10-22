@@ -18,7 +18,7 @@ namespace {
 }  // namespace
 
 namespace nMatcha {
-    Thread::Thread() : mStackPtr(nullptr), mFinished(false), mExecutor(nullptr) {
+    Thread::Thread() : mStack{}, mFinished(false), mExecutor(nullptr) {
         const long PAGE_SIZE = get_pagesize();
         const long STACK_SIZE = 8 * PAGE_SIZE;
 
@@ -35,10 +35,18 @@ namespace nMatcha {
         assert(ret == 0);
 
         // Adjust stack pointer, as stack grows downwards.
-        mStackPtr = static_cast<uint8_t*>(stack) + STACK_SIZE;
+        mStack.mPtr = static_cast<uint8_t*>(stack) + STACK_SIZE;
+        mStack.mBottom = stack;
+        mStack.mSize= STACK_SIZE;
+
 
         // Arch specific stack initialization.
-        mStackPtr = init_stack(mStackPtr, Thread::entry, static_cast<void*>(this));
+        mStack.mPtr = init_stack(mStack.mPtr, Thread::entry, static_cast<void*>(this));
+    }
+
+    Thread::~Thread() {
+            int ret = ::munmap(mStack.mBottom, mStack.mSize);
+            assert(ret == 0);
     }
 
     bool Thread::isFinished() const {
@@ -60,7 +68,7 @@ namespace nMatcha {
 
     void Thread::yield() {
         assert(mExecutor);
-        ::yield(mExecutor->getStackPtr(), &mStackPtr);
+        ::yield(mExecutor->getStackPtr(), &mStack.mPtr);
     }
 
     std::unique_ptr<Thread> FnThread::make(UserFn f) {

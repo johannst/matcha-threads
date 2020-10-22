@@ -33,7 +33,7 @@ namespace nMatcha {
         Thread(const Thread&) = delete;
         Thread& operator=(const Thread&) = delete;
         Thread();
-        virtual ~Thread() {}
+        virtual ~Thread();
 
         bool isFinished() const;
 
@@ -42,9 +42,13 @@ namespace nMatcha {
 
       private:
         virtual void threadFn() = 0;
-
         static void entry(void* ctx);
-        void* mStackPtr;
+
+        struct Stack {
+            void* mBottom;
+            size_t mSize;
+            void* mPtr;
+        } mStack;
         bool mFinished;
 
         friend struct Executor;
