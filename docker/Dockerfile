@@ -1,9 +1,11 @@
 # Copyright (c) 2020 Johannes Stoelp
-FROM ubuntu:20.04
+FROM ubuntu:latest
 
 RUN apt update                     \
  && DEBIAN_FRONTEND=noninteractive \
-    apt install -y                 \
+    apt install                    \
+      --yes                        \
+      --no-install-recommends      \
       make                         \
       gcc                          \
       g++                          \
