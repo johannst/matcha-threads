@@ -10,6 +10,7 @@ created to type some lines of `asm` and filll a few evenings.
 Supported platforms are `Linux` running on
 - `x86_64`
 - `arm64`
+- `armv7a`
 
 ### Example
 
@@ -73,6 +74,10 @@ make demo1
 The `arm64` demo can be run as
 ```bash
 make ARCH=arm64 demo1
+```
+The `armv7a` demo can be run as
+```bash
+make ARCH=arm demo1
 ```
 > Before starting to compile & run for a different architecture the the current
 > build artifacts should be removed via `make clean`.
