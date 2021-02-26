@@ -4,6 +4,8 @@ ARCH ?= x86_64
 
 ifeq ($(ARCH),arm64)
 PREFIX := aarch64-linux-gnu-
+else ifeq ($(ARCH),arm)
+PREFIX := arm-linux-gnueabi-
 endif
 
 AS       := $(PREFIX)gcc

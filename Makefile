@@ -4,6 +4,8 @@ ARCH ?= x86_64
 
 ifeq ($(ARCH),arm64)
 PREFIX := aarch64-linux-gnu-
+else ifeq ($(ARCH),arm)
+PREFIX := arm-linux-gnueabi-
 endif
 
 CXX      := $(PREFIX)g++
@@ -28,6 +30,11 @@ ifeq ($(ARCH),arm64)
 	    -L /usr/aarch64-linux-gnu                     \
 	    -E LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib \
 	    $<
+else ifeq ($(ARCH),arm)
+	qemu-arm                                          \
+	    -L /usr/arm-linux-gnueabi                     \
+	    -E LD_LIBRARY_PATH=/usr/arm-linux-gnueabi/lib \
+	    $<
 else
 	$<
 endif
@@ -37,6 +44,13 @@ ifeq ($(ARCH),arm64)
 	qemu-aarch64                                      \
 	    -L /usr/aarch64-linux-gnu                     \
 	    -E LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib \
+	    -g 1234                                       \
+	    $< &
+	gdb-multiarch -ex 'target remote :1234' -ex 'b main' -ex 'c' $<
+else ifeq ($(ARCH),arm)
+	qemu-arm                                          \
+	    -L /usr/arm-linux-gnueabi                     \
+	    -E LD_LIBRARY_PATH=/usr/arm-linux-gnueabi/lib \
 	    -g 1234                                       \
 	    $< &
 	gdb-multiarch -ex 'target remote :1234' -ex 'b main' -ex 'c' $<

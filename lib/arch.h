@@ -10,6 +10,8 @@ static_assert(false, "Matcha Threads only supported on Linux!");
 #    include "arch/x86_64/api.h"
 #elif defined(__aarch64__)
 #    include "arch/arm64/api.h"
+#elif defined(__arm__)
+#    include "arch/arm/api.h"
 #else
 static_assert(false, "Unsupported architecture!");
 #endif

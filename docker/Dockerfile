@@ -11,11 +11,13 @@ RUN apt update                     \
       g++                          \
       gcc-aarch64-linux-gnu        \
       g++-aarch64-linux-gnu        \
+      gcc-arm-linux-gnueabi        \
+      g++-arm-linux-gnueabi        \
       gdb-multiarch                \
       qemu-user                    \
  && rm -rf /var/lib/apt/lists/*    \
  && apt-get clean                  \
  # Remove expensive qemu emulators which are currently not used.
- && rm -f $(find /usr/bin -name 'qemu-*' | grep -v 'qemu-aarch64$')
+ && rm -f $(find /usr/bin -name 'qemu-*' | grep -v 'qemu-aarch64$\|qemu-arm$')
 
 WORKDIR /develop
