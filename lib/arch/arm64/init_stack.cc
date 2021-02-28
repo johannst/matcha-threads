@@ -1,6 +1,10 @@
 #include <cassert>
 #include <cstdint>  // uintN_t
 
+#if !defined(__ARM_PCS_AAPCS64)
+static_assert(false, "Must be compiled with the Arm64 Procedure Call Standard (aapcs64)!");
+#endif
+
 extern "C" void thread_create();
 
 void* init_stack(void* stack_ptr, void (*entry)(void*), const void* ctx) {

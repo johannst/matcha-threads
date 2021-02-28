@@ -1,6 +1,10 @@
 #include <cassert>
 #include <cstdint>  // uintN_t
 
+#if !defined(__APCS_32__)
+static_assert(false, "Must be compiled with the Arm Procedure Call Standard (aapcs32)!");
+#endif
+
 extern "C" void thread_create();
 
 void* init_stack(void* stack_ptr, void (*entry)(void*), const void* ctx) {
