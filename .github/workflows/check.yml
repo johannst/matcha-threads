@@ -20,5 +20,5 @@ jobs:
               docker run                 \
                   --rm                   \
                   --volume $PWD:/develop \
-                  matcha-box /bin/bash -c "make clean && make ARCH=$arch demo1"
+                  matcha-box /bin/bash -c "make ARCH=$arch clean demo1"
           done
