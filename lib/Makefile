@@ -2,10 +2,14 @@
 
 ARCH ?= x86_64
 
-ifeq ($(ARCH),arm64)
+ifeq ($(ARCH),x86_64)
+PREFIX :=
+else ifeq ($(ARCH),arm64)
 PREFIX := aarch64-linux-gnu-
 else ifeq ($(ARCH),arm)
 PREFIX := arm-linux-gnueabi-
+else
+$(error Unsupported architecture ARCH=$(ARCH))
 endif
 
 AS       := $(PREFIX)gcc
