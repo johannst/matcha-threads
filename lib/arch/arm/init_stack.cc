@@ -1,3 +1,5 @@
+/* Copyright (c) 2021 Johannes Stoelp */
+
 #include <cassert>
 #include <cstdint>  // uintN_t
 
