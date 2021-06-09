@@ -2,7 +2,7 @@
 
 #include "executor.h"
 
-#include "arch.h"
+#include "arch/api.h"
 
 namespace nMatcha {
     const void* Executor::getStackPtr() const {

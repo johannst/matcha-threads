@@ -2,7 +2,7 @@
 
 #include "thread.h"
 
-#include "arch.h"
+#include "arch/api.h"
 #include "executor.h"
 
 #include <cassert>
