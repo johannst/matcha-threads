@@ -12,6 +12,8 @@ static_assert(false, "Matcha Threads only supported on Linux!");
 // fall-through: arm64 support
 #elif defined(__arm__)
 // fall-through: armv7 support
+#elif defined(__riscv) && __riscv_xlen == 64
+// fall-through: riscv64 support
 #else
 static_assert(false, "Unsupported architecture!");
 #endif

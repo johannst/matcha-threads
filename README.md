@@ -79,6 +79,10 @@ The `armv7a` demo can be run as
 ```bash
 make ARCH=arm demo1
 ```
+The `riscv64` demo can be run as
+```bash
+make ARCH=riscv64 demo1
+```
 > Before starting to compile & run for a different architecture the the current
 > build artifacts should be removed via `make clean`.
 

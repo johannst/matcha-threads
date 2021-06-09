@@ -1,4 +1,4 @@
-# Copyright (c) 2020 Johannes Stoelp
+# Copyright (c) 2021 Johannes Stoelp
 
 ARCH ?= x86_64
 
@@ -8,6 +8,8 @@ else ifeq ($(ARCH),arm64)
 PREFIX := aarch64-linux-gnu-
 else ifeq ($(ARCH),arm)
 PREFIX := arm-linux-gnueabi-
+else ifeq ($(ARCH),riscv64)
+PREFIX := riscv64-linux-gnu-
 else
 $(error Unsupported architecture ARCH=$(ARCH))
 endif
