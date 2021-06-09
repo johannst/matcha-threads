@@ -11,6 +11,7 @@ Supported platforms are `Linux` running on
 - `x86_64`
 - `arm64`
 - `armv7a`
+- `riscv64`
 
 ### Example
 
