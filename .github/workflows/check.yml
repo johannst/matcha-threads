@@ -15,7 +15,7 @@ jobs:
           docker/build.sh matcha-box
     - name: Run examples
       run: |
-          for arch in x86_64 arm64 arm; do
+          for arch in x86_64 arm64 arm riscv64; do
               echo -e "\e[1;32m==> check ARCH=$arch\e0m"
               docker run                 \
                   --rm                   \
