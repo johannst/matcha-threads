@@ -12,7 +12,7 @@ CXX      := $(PREFIX)g++
 CXXFLAGS := -g -O0 -Wall -Wextra -I.
 
 lib/libmatcha.a:
-	make -C lib ARCH=$(ARCH)
+	$(MAKE) -C lib ARCH=$(ARCH)
 .PHONY: lib/libmatcha.a
 
 %.o: %.cc
@@ -66,5 +66,5 @@ docker: docker/Dockerfile
 .PHONY: docker
 
 clean:
-	make -C lib clean
-	rm -f example/demo1 example/demo1.o
+	$(MAKE) -C lib clean
+	$(RM) example/demo1 example/demo1.o

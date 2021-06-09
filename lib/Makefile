@@ -34,7 +34,7 @@ libmatcha.a: $(OBJS)
 	$(AS) -c -o $@ $(ASFLAGS) $< 
 
 clean:
-	rm -f $(OBJS) $(DEPS)
-	rm -f libmatcha.a
+	$(RM) $(OBJS) $(DEPS)
+	$(RM) libmatcha.a
 
 -include $(DEPS)
