@@ -8,9 +8,9 @@
 thread_create:
     .cfi_startproc
     ld a0, 8(sp)
-    ld x5, 0(sp)
+    ld t0, 0(sp)
 
-    jalr x5
+    jalr t0
 
     # FIXME: no return from thread after user fn finished.
 1:
