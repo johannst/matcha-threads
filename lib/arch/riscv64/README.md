@@ -3,7 +3,7 @@ Provide an implementation of the platform specific API as required in
 [`api.h`](../api.h) according to the `RISC-V ELF ABI`.
 
 ## Notes: RISC-V ABI
-- Integer/pointer arguments via `x10 - x17`
+- Integer/pointer arguments via `x10` - `x17`
 - Integer/pointer return values via `x10` - `x11`
 - Callee saved registers `x2`, `x8` - `x9`, `x18` - `x27`, `f8` - `f9`, `f18` - `f27`
 
