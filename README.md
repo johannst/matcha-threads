@@ -1,5 +1,5 @@
 # matcha-threads
-![check-examples][badge_check_examples]
+![check-examples][badge_check_examples] [![blog][badge_blog]][html_blog]
 
 A simple and unsafe implementation of `cooperative-multitasking` in userspace
 (see [`fibers`][fiber_wiki]).
@@ -92,3 +92,5 @@ This project is licensed under the [MIT](LICENSE) license.
 
 [fiber_wiki]: https://en.wikipedia.org/wiki/Fiber_(computer_science)
 [badge_check_examples]: https://github.com/johannst/matcha-threads/workflows/check-examples/badge.svg
+[html_blog]: https://blog.memzero.de/xpost-matcha-threads
+[badge_blog]: https://img.shields.io/badge/blog_entry-gray?logo=mdbook
