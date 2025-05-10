@@ -1,4 +1,6 @@
-# Copyright (c) 2020 Johannes Stoelp
+# SPDX-License-Identifier: MIT
+#
+# Copyright (c) 2020, Johannes Stoelp <dev@memzero.de>
 
     .arch armv8-a
     .section .text, "ax", @progbits

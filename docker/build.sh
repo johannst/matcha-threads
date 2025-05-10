@@ -1,5 +1,8 @@
 #!/bin/bash
-# Copyright (c) 2020 Johannes Stoelp
+
+# SPDX-License-Identifier: MIT
+#
+# Copyright (c) 2020, Johannes Stoelp <dev@memzero.de>
 
 image=${1:-matcha-box}
 
